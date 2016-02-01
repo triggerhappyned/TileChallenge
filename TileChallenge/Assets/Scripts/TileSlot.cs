@@ -7,7 +7,7 @@ public class TileSlot : MonoBehaviour
 	
 	#region Variables
 	public string correctLetter;
-	public GameObject placedTile;
+	public Tile placedTile;
 	#endregion
 
 	// Use this for initialization
@@ -22,5 +22,18 @@ public class TileSlot : MonoBehaviour
 	
 	}
 
+	void OnTriggerEnter(Collider col)
+	{
+		//Debug.Log("Entered");
+		col.gameObject.GetComponent<Tile>().FoundSlot(this);
+		placedTile = col.gameObject.GetComponent<Tile>();
+
+	}
+	void OnTriggerExit(Collider col)
+	{
+		//Debug.Log("Exited");
+		col.gameObject.GetComponent<Tile>().LoseSlot();
+		placedTile = null;
+	}
 
 }

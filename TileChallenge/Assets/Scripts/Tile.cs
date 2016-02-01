@@ -8,7 +8,10 @@ public class Tile : MonoBehaviour
 	#region Variables
 	public string letter;
 	public UILabel mylabel;
-
+	public Vector3 startPos;
+	private Vector3 retPos;
+	private Vector3 slotPos;
+	public bool hasSlot;
 	#endregion
 
 	// Use this for initialization
@@ -21,8 +24,9 @@ public class Tile : MonoBehaviour
 		if(letter != "")
 		{
 			mylabel.text = letter;
-			Debug.Log(letter);
+
 		}
+		startPos = transform.localPosition;
 	}
 	// Update is called once per frame
 	void Update () 
@@ -34,13 +38,36 @@ public class Tile : MonoBehaviour
 	{
 
 	}
+	void OnTriggerExit(Collider other) 
+	{
+		
+	}
 	public void PickedUp()
 	{
-		Debug.Log("Picked Up");
+		//Debug.Log("Picked Up" + this.transform.position);
+		retPos = this.transform.localPosition;
 	}
 	public void OnRelease()
 	{
-		Debug.Log("Released");
+		//Debug.Log("Released" + this.transform.localPosition);
+//		if(!hasSlot)
+//		{
+//			retPos = startPos;
+//		}
+		TweenPosition.Begin(this.gameObject,0.2f,retPos);
+		SendMessageUpwards("StartWinCheck");
+	}
+	public void FoundSlot(TileSlot tSlot)
+	{
+		slotPos = tSlot.transform.localPosition;
+		retPos = slotPos;
+		hasSlot = true;
+	}
+	public void LoseSlot()
+	{
+		//slotPos = tSlot.transform.localPosition;
+		retPos = startPos;
+		hasSlot = false;
 	}
 
 }
