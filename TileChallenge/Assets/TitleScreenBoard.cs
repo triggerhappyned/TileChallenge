@@ -14,7 +14,7 @@ public class TitleScreenBoard : MonoBehaviour
 	private int numofslots;
 	public TileSlot[] slots;
 	
-	
+	public TileBoard basicMode;
 	#endregion
 	
 	// Use this for initialization
@@ -70,6 +70,10 @@ public class TitleScreenBoard : MonoBehaviour
 		{
 
 			TweenPosition.Begin(this.gameObject, 0.9f, new Vector3(0,-300,0));
+			basicMode.Init();
+			yield return new WaitForSeconds(0.1f);
+
+			TweenPosition.Begin(basicMode.gameObject, 1.5f, new Vector3(0,0,0));
 		}
 
 		yield return new WaitForSeconds(1.2f);

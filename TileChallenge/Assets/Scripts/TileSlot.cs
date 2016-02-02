@@ -8,6 +8,7 @@ public class TileSlot : MonoBehaviour
 	#region Variables
 	public string correctLetter;
 	public Tile placedTile;
+	public GameObject bg;
 	#endregion
 
 	// Use this for initialization
@@ -22,18 +23,28 @@ public class TileSlot : MonoBehaviour
 	
 	}
 
+	public void BeginHoverTween()
+	{
+		if(!placedTile)
+			TweenScale.Begin(bg,0.1f,new Vector3(60f,60f,1));
+	}
+	public void EndHoverTween()
+	{
+		TweenScale.Begin(bg,0.1f,new Vector3(50f,50f,1));
+	}
 	void OnTriggerEnter(Collider col)
 	{
-		//Debug.Log("Entered");
+		Debug.Log("Entered: " + col.GetComponent<Tile>().letter + " " + correctLetter);
 		col.gameObject.GetComponent<Tile>().FoundSlot(this);
-		placedTile = col.gameObject.GetComponent<Tile>();
-
+		//placedTile = col.gameObject.GetComponent<Tile>();
+		//TweenScale.Begin(this.gameObject,0.2f,new Vector3(1,1,1));
 	}
 	void OnTriggerExit(Collider col)
 	{
-		//Debug.Log("Exited");
-		col.gameObject.GetComponent<Tile>().LoseSlot();
-		placedTile = null;
+		Debug.Log("Exited: " + col.GetComponent<Tile>().letter );
+		col.gameObject.GetComponent<Tile>().LoseSlot(this);
+		//placedTile = null;
+		//TweenScale.Begin(this.gameObject,0.2f,new Vector3(0.75f,0.75f,1));
 	}
 
 }

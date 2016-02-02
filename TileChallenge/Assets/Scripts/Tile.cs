@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
 	private Vector3 retPos;
 	private Vector3 slotPos;
 	public bool hasSlot;
+	public TileSlot myslot;
 	#endregion
 
 	// Use this for initialization
@@ -50,24 +51,34 @@ public class Tile : MonoBehaviour
 	public void OnRelease()
 	{
 		//Debug.Log("Released" + this.transform.localPosition);
-//		if(!hasSlot)
-//		{
-//			retPos = startPos;
-//		}
+		if(hasSlot && !myslot.placedTile)
+		{
+			myslot.placedTile = this;
+			myslot.EndHoverTween();
+		}
 		TweenPosition.Begin(this.gameObject,0.2f,retPos);
+
 		SendMessageUpwards("StartWinCheck");
+
 	}
 	public void FoundSlot(TileSlot tSlot)
 	{
 		slotPos = tSlot.transform.localPosition;
 		retPos = slotPos;
 		hasSlot = true;
+		myslot = tSlot;
+		myslot.BeginHoverTween();
 	}
-	public void LoseSlot()
+	public void LoseSlot(TileSlot tslot)
 	{
 		//slotPos = tSlot.transform.localPosition;
+		//if(hasSlot && !myslot.placedTile)
+		//{
+		tslot.EndHoverTween();
+		//}
 		retPos = startPos;
 		hasSlot = false;
+		myslot = null;
 	}
 
 }
