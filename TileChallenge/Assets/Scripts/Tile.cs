@@ -12,7 +12,9 @@ public class Tile : MonoBehaviour
 	private Vector3 retPos;
 	private Vector3 slotPos;
 	public bool hasSlot;
+
 	public TileSlot myslot;
+	public PointBurst myPointBurst;
 	#endregion
 
 	// Use this for initialization
@@ -46,7 +48,17 @@ public class Tile : MonoBehaviour
 	public void PickedUp()
 	{
 		//Debug.Log("Picked Up" + this.transform.position);
-		retPos = this.transform.localPosition;
+		//retPos = this.transform.localPosition;
+		if(myslot)
+		{
+			if(myslot.correctLetter != letter)
+			{
+				myslot.placedTile = null;
+				myslot = null;
+				hasSlot = false;
+				retPos = startPos;
+			}
+		}
 	}
 	public void OnRelease()
 	{
@@ -55,6 +67,21 @@ public class Tile : MonoBehaviour
 		{
 			myslot.placedTile = this;
 			myslot.EndHoverTween();
+			if(myslot.correctLetter == letter)
+			{
+				this.GetComponent<UIDragObject>().enabled = false;
+				this.GetComponent<UIButtonScale>().enabled = false;
+
+				myPointBurst.Activate(TileBoard.currentStreak);
+				TileBoard.inStreak = true;
+				TileBoard.currentStreak *= 2;
+			}
+			else
+			{
+				TileBoard.inStreak = false;
+				TileBoard.currentStreak = 1;
+				myPointBurst.ActivateFail();
+			}
 		}
 		TweenPosition.Begin(this.gameObject,0.2f,retPos);
 
@@ -63,22 +90,32 @@ public class Tile : MonoBehaviour
 	}
 	public void FoundSlot(TileSlot tSlot)
 	{
-		slotPos = tSlot.transform.localPosition;
-		retPos = slotPos;
-		hasSlot = true;
-		myslot = tSlot;
-		myslot.BeginHoverTween();
+
+		if(!tSlot.placedTile)
+		{
+			if(myslot)
+			{
+				myslot.EndHoverTween();
+			}
+			slotPos = tSlot.transform.localPosition;
+			retPos = slotPos;
+			hasSlot = true;
+			myslot = tSlot;
+			myslot.BeginHoverTween();
+		}
+
 	}
 	public void LoseSlot(TileSlot tslot)
 	{
 		//slotPos = tSlot.transform.localPosition;
-		//if(hasSlot && !myslot.placedTile)
-		//{
+
 		tslot.EndHoverTween();
-		//}
-		retPos = startPos;
-		hasSlot = false;
-		myslot = null;
+		if(myslot == tslot)
+		{
+			retPos = startPos;
+			hasSlot = false;
+			myslot = null;
+		}
 	}
 
 }

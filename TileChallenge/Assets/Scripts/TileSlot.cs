@@ -36,15 +36,13 @@ public class TileSlot : MonoBehaviour
 	{
 		Debug.Log("Entered: " + col.GetComponent<Tile>().letter + " " + correctLetter);
 		col.gameObject.GetComponent<Tile>().FoundSlot(this);
-		//placedTile = col.gameObject.GetComponent<Tile>();
-		//TweenScale.Begin(this.gameObject,0.2f,new Vector3(1,1,1));
+
 	}
 	void OnTriggerExit(Collider col)
 	{
 		Debug.Log("Exited: " + col.GetComponent<Tile>().letter );
 		col.gameObject.GetComponent<Tile>().LoseSlot(this);
-		//placedTile = null;
-		//TweenScale.Begin(this.gameObject,0.2f,new Vector3(0.75f,0.75f,1));
+
 	}
 
 }

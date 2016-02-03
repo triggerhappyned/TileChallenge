@@ -13,7 +13,8 @@ public class TileBoard : MonoBehaviour
 	private int numofslots;
 	public TileSlot[] slots;
  	
-
+	public static int currentStreak = 1;
+	public static bool inStreak = false;
 	#endregion
 
 	// Use this for initialization
@@ -24,6 +25,9 @@ public class TileBoard : MonoBehaviour
 	}
 	public void Init()
 	{
+		currentStreak = 1;
+		inStreak = false;
+
 		Transform temptrans;
 		GameObject slot;
 		GameObject tile;
@@ -52,6 +56,7 @@ public class TileBoard : MonoBehaviour
 			tile.GetComponent<Tile>().letter = gameAnswer.Substring(i,1);
 
 		}
+
 	}
 	// Update is called once per frame
 	void Update () 
@@ -88,4 +93,5 @@ public class TileBoard : MonoBehaviour
 	{
 		StartCoroutine("waitToCheckWin");
 	}
+	
 }
