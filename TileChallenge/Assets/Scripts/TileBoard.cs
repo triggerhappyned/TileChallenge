@@ -11,10 +11,10 @@ public class TileBoard : MonoBehaviour
 	public string gameAnswer;
 	public int offset;
 	private int numofslots;
-	public TileSlot[] slots;
- 	
+	private TileSlot[] slots;
 	public static int currentStreak = 1;
 	public static bool inStreak = false;
+	private List<Tile> temptiles = new List<Tile>();
 	#endregion
 
 	// Use this for initialization
@@ -55,8 +55,17 @@ public class TileBoard : MonoBehaviour
 			tile.transform.localPosition = temptrans.position;
 			tile.GetComponent<Tile>().letter = gameAnswer.Substring(i,1);
 
+			temptiles.Add(tile.GetComponent<Tile>());
 		}
 
+		temptiles.Sort((x, y) => x.letter.CompareTo(y.letter));
+		int tempindex = 0;
+		foreach(Tile t in temptiles)
+		{
+			t.transform.localPosition = new Vector3(-offset + (50 * tempindex), 
+			                                   50 + (20 * Random.value), 0);
+			tempindex++;
+		}
 	}
 	// Update is called once per frame
 	void Update () 

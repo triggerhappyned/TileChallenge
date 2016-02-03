@@ -48,7 +48,7 @@ public class Tile : MonoBehaviour
 	public void PickedUp()
 	{
 		//Debug.Log("Picked Up" + this.transform.position);
-		//retPos = this.transform.localPosition;
+		retPos = startPos;
 		if(myslot)
 		{
 			if(myslot.correctLetter != letter)
