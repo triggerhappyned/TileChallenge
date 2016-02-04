@@ -64,13 +64,14 @@ public class TitleScreenBoard : MonoBehaviour
 		yield return new WaitForSeconds(0.5f);
 		win = CheckForWin();
 		Debug.Log(win);
-
-		//yield return new WaitForSeconds(0.5f);
+//		GameObject fireworks = GameObject.FindGameObjectWithTag("Fireworks");
+//		fireworks.GetComponent<VictoryFireworks>().ActivateVictory();
+//		yield return new WaitForSeconds(3.5f);
 		if(win)
 		{
 
 			TweenPosition.Begin(this.gameObject, 0.9f, new Vector3(0,-300,0));
-			basicMode.Init();
+			basicMode.InitWithSpaces();
 			yield return new WaitForSeconds(0.1f);
 
 			TweenPosition.Begin(basicMode.gameObject, 1.5f, new Vector3(0,0,0));

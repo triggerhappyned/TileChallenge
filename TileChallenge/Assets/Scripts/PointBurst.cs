@@ -13,7 +13,7 @@ public class PointBurst : MonoBehaviour
 	{
 		this.GetComponent<UILabel>().text = "+" + points;
 		this.gameObject.SetActive(true);
-
+		GameObject.FindGameObjectWithTag("ScoreBoard").GetComponent<ScoreBoard>().UpdateScore(points);
 		StartCoroutine("Burst");
 	}
 	public void ActivateFail()
