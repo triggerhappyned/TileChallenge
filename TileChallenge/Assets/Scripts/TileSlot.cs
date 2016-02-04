@@ -34,15 +34,11 @@ public class TileSlot : MonoBehaviour
 	}
 	void OnTriggerEnter(Collider col)
 	{
-		//Debug.Log("Entered: " + col.GetComponent<Tile>().letter + " " + correctLetter);
 		col.gameObject.GetComponent<Tile>().FoundSlot(this);
-
 	}
 	void OnTriggerExit(Collider col)
 	{
-		//Debug.Log("Exited: " + col.GetComponent<Tile>().letter );
 		col.gameObject.GetComponent<Tile>().LoseSlot(this);
-
 	}
 	void OnTriggerStay(Collider col)
 	{

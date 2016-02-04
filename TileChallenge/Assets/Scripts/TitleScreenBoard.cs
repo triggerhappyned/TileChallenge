@@ -20,6 +20,9 @@ public class TitleScreenBoard : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+
+		//placing the start screen tiles and animating them into position. 
+
 		slots[1].placedTile = lTile;
 		slots[2].placedTile = aTile;
 		slots[3].placedTile = yTile;
@@ -32,13 +35,7 @@ public class TitleScreenBoard : MonoBehaviour
 		TweenPosition.Begin(aTile.gameObject, 1.0f, slots[2].transform.localPosition);
 		TweenPosition.Begin(yTile.gameObject, 1.0f, slots[3].transform.localPosition);
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
-	}
-
+	// win check to get the game started. 
 	public bool CheckForWin()
 	{
 		string tempString = "";
@@ -64,9 +61,7 @@ public class TitleScreenBoard : MonoBehaviour
 		yield return new WaitForSeconds(0.5f);
 		win = CheckForWin();
 		Debug.Log(win);
-//		GameObject fireworks = GameObject.FindGameObjectWithTag("Fireworks");
-//		fireworks.GetComponent<VictoryFireworks>().ActivateVictory();
-//		yield return new WaitForSeconds(3.5f);
+
 		if(win)
 		{
 

@@ -27,6 +27,7 @@ public class TileBoard : MonoBehaviour
 
 
 	}
+	// initiallizes game board with spaces and new line if required. 
 	public void InitWithSpaces()
 	{
 		currentStreak = 1;
@@ -91,17 +92,16 @@ public class TileBoard : MonoBehaviour
 
 				}
 			}
-
-
 		}
-		
+		// this will sort the tiles and place them above the game board.
+		// tiles are placed in alphabetical order for simplicity. 
 		temptiles.Sort((x, y) => x.letter.CompareTo(y.letter));
 		int tempindex = 0;
 		int newlineoffset = 0;
 		spaceOffset = 0;
 		foreach(Tile t in temptiles)
 		{
-			if(tempindex > numofslots/2 && numofslots > 10 ) // (gameAnswer.Length - numofslots ))
+			if(tempindex > numofslots/2 && numofslots > 10 ) 
 			{
 				newlineoffset = -60;
 				spaceOffset = -450;
@@ -112,51 +112,7 @@ public class TileBoard : MonoBehaviour
 
 		}
 	}
-	public void Init()
-	{
-		currentStreak = 1;
-		inStreak = false;
-
-		Transform temptrans;
-		GameObject slot;
-		GameObject tile;
-		numofslots = gameAnswer.Length;
-		slots = new TileSlot[numofslots];
-		for(int i = 0; i < gameAnswer.Length; i++)
-		{
-			slot = (GameObject) GameObject.Instantiate(slotPrefab,
-			                       new Vector3(-offset + (50 * i), -50, 0),
-			                              Quaternion.identity);
-			temptrans = slot.transform;
-			slot.transform.parent = this.gameObject.transform;
-			slot.transform.localScale = new Vector3(0.75f,0.75f,1);
-			slot.transform.localPosition = temptrans.position;
-			slot.GetComponent<TileSlot>().correctLetter = gameAnswer.Substring(i,1);
-			slots[i] = slot.GetComponent<TileSlot>();
-
-			tile = (GameObject) GameObject.Instantiate(tilePrefab,
-			            new Vector3(-offset + (50 * i),
-			            50 + (20 * Random.value), 0),
-			                           Quaternion.identity);
-			temptrans = tile.transform;
-			tile.transform.parent = this.gameObject.transform;
-			tile.transform.localScale = temptrans.lossyScale;
-			tile.transform.localPosition = temptrans.position;
-			tile.GetComponent<Tile>().letter = gameAnswer.Substring(i,1);
-
-			temptiles.Add(tile.GetComponent<Tile>());
-		}
-
-		temptiles.Sort((x, y) => x.letter.CompareTo(y.letter));
-		int tempindex = 0;
-		foreach(Tile t in temptiles)
-		{
-			t.transform.localPosition = new Vector3(-offset + (50 * tempindex), 
-			                                   50 + (20 * Random.value), 0);
-			tempindex++;
-		}
-	}
-
+	// this is a win check that is preformed every time a tile is placed.
 	public bool CheckForWin()
 	{
 		string tempString = "";
@@ -211,7 +167,7 @@ public class TileBoard : MonoBehaviour
 	{
 		StartCoroutine("waitToCheckWin");
 	}
-
+	//starts next level. stops firework celebration.
 	public void StartNextLevel()
 	{
 		GameObject fireworks = GameObject.FindGameObjectWithTag("Fireworks");

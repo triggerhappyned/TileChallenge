@@ -31,23 +31,12 @@ public class Tile : MonoBehaviour
 		}
 		startPos = transform.localPosition;
 	}
-	// Update is called once per frame
-	void Update () 
-	{
 
-	}
-
-	void OnTriggerEnter(Collider other) 
-	{
-
-	}
-	void OnTriggerExit(Collider other) 
-	{
-		
-	}
+	// called when clicked 
+	// tiles will forget its current slot if ot has one. 
 	public void PickedUp()
 	{
-		//Debug.Log("Picked Up" + this.transform.position);
+
 		retPos = startPos;
 		if(myslot)
 		{
@@ -60,9 +49,11 @@ public class Tile : MonoBehaviour
 			}
 		}
 	}
-	public void OnRelease()
+	// OnRelease is called when the tile is "let go" 
+	// tile will either drop into a slot, or return to its start point.
+	public void OnRelease() 
 	{
-		//Debug.Log("Released" + this.transform.localPosition);
+
 		if(hasSlot && !myslot.placedTile)
 		{
 			myslot.placedTile = this;
@@ -92,6 +83,8 @@ public class Tile : MonoBehaviour
 		SendMessageUpwards("StartWinCheck");
 
 	}
+	// called when tile is touching a slot, slot will be remembered as current 
+	// if tile is dropped
 	public void FoundSlot(TileSlot tSlot)
 	{
 
@@ -109,10 +102,9 @@ public class Tile : MonoBehaviour
 		}
 
 	}
+	// this removes all slot info if the tile is dragged away from a slot. 
 	public void LoseSlot(TileSlot tslot)
 	{
-		//slotPos = tSlot.transform.localPosition;
-
 		tslot.EndHoverTween();
 		if(myslot == tslot)
 		{
