@@ -74,7 +74,11 @@ public class Tile : MonoBehaviour
 
 				myPointBurst.Activate(TileBoard.currentStreak);
 				TileBoard.inStreak = true;
-				TileBoard.currentStreak *= 2;
+				if(TileBoard.currentStreak < 10)
+				{
+					TileBoard.currentStreak *= 2;
+				}
+
 			}
 			else
 			{
